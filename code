@@ -1,0 +1,44 @@
+// Automatic Fire Extinguisher System
+
+int flameSensor = 2;
+int relayPin = 7;
+int buzzer = 8;
+
+void setup() {
+
+  pinMode(flameSensor, INPUT);
+  pinMode(relayPin, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+
+  // Initial OFF condition
+  digitalWrite(relayPin, HIGH);
+  digitalWrite(buzzer, LOW);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+
+  int flame = digitalRead(flameSensor);
+
+  // Flame detected
+  if (flame == LOW) {
+
+    Serial.println("FIRE DETECTED!");
+
+    digitalWrite(relayPin, LOW);   // Water Pump ON
+    digitalWrite(buzzer, HIGH);    // Alarm ON
+
+  }
+
+  // No flame detected
+  else {
+
+    Serial.println("No Fire");
+
+    digitalWrite(relayPin, HIGH);  // Water Pump OFF
+    digitalWrite(buzzer, LOW);     // Alarm OFF
+  }
+
+  delay(200);
+}
